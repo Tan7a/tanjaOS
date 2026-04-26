@@ -1,0 +1,29 @@
+@import "tailwindcss";
+
+@theme inline {
+  /* Color palette — earthy, warm, painterly */
+  --color-terracotta: #c8725a;
+  --color-clay: #a0503c;
+  --color-sage: #7a9e7e;
+  --color-moss: #4e7a52;
+  --color-cornflower: #7a9abf;
+  --color-ochre: #c8a040;
+  --color-peach: #f2c894;
+  --color-cream: #fdf6ee;
+  --color-stone-warm: #c4a882;
+
+  /* Typography */
+  --font-display: var(--font-playfair);
+  --font-body: var(--font-lora);
+}
+
+html,
+body {
+  height: 100%;
+  overflow: hidden;
+}
+
+body {
+  background: #fdf6ee;
+  color: #3a2e26;
+}

@@ -1,0 +1,5 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 36 36" fill="none">
+  <!-- Person silhouette -->
+  <circle cx="18" cy="13" r="6" fill="#fdf6ee"/>
+  <path d="M6,34 C6,24 30,24 30,34" stroke="#fdf6ee" stroke-width="2.5" stroke-linecap="round" fill="none"/>
+</svg>
