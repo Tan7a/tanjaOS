@@ -1,20 +1,31 @@
 @import "tailwindcss";
 
-@theme inline {
-  /* Color palette — earthy, warm, painterly */
-  --color-terracotta: #c8725a;
-  --color-clay: #a0503c;
-  --color-sage: #7a9e7e;
-  --color-moss: #4e7a52;
-  --color-cornflower: #7a9abf;
-  --color-ochre: #c8a040;
-  --color-peach: #f2c894;
-  --color-cream: #fdf6ee;
-  --color-stone-warm: #c4a882;
+:root {
+  /* Window chrome */
+  --xp-title-active-start: #0054E3;
+  --xp-title-active-end: #6BA0F0;
+  --xp-title-inactive-start: #7A96DF;
+  --xp-title-inactive-end: #C7D5F9;
+  --xp-window-border: #0054E3;
+  --xp-window-bg: #ECE9D8;
+  --xp-window-content-bg: #FFFFFF;
 
-  /* Typography */
-  --font-display: var(--font-playfair);
-  --font-body: var(--font-lora);
+  /* Taskbar */
+  --xp-taskbar-bg: linear-gradient(to bottom, #2769D6, #1042A3);
+  --xp-taskbar-height: 30px;
+
+  /* Start button */
+  --xp-start-green: #3A8B3A;
+  --xp-start-green-hover: #4DAA4D;
+
+  /* System colors */
+  --xp-blue: #003399;
+  --xp-selection: #316AC5;
+  --xp-text-on-title: #FFFFFF;
+
+  /* Fonts */
+  --xp-font: 'Tahoma', 'Arial', sans-serif;
+  --xp-font-size: 11px;
 }
 
 html,
@@ -24,6 +35,62 @@ body {
 }
 
 body {
-  background: #fdf6ee;
-  color: #3a2e26;
+  font-family: var(--xp-font);
+  font-size: var(--xp-font-size);
+  color: #000000;
+  background: #2A6FCB;
+  cursor: default;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* XP authenticity: default cursor everywhere except real links */
+*,
+*::before,
+*::after {
+  cursor: inherit;
+}
+
+a,
+a * {
+  cursor: pointer;
+}
+
+/* Sheep head-bob animation (Music Player) */
+@keyframes headBob {
+  0%, 100% {
+    transform: translateY(0) rotate(0deg);
+  }
+  25% {
+    transform: translateY(-4px) rotate(-3deg);
+  }
+  75% {
+    transform: translateY(-2px) rotate(2deg);
+  }
+}
+
+.sheep-head {
+  transform-origin: center bottom;
+}
+
+.sheep-head--bobbing {
+  animation: headBob 500ms ease-in-out infinite;
+}
+
+/* XP raised/sunken edge helpers used by chrome */
+.xp-raised {
+  box-shadow:
+    inset 1px 1px 0 #FFFFFF,
+    inset -1px -1px 0 #6F7378;
+}
+
+.xp-sunken {
+  box-shadow:
+    inset 1px 1px 0 #6F7378,
+    inset -1px -1px 0 #FFFFFF;
+}
+
+/* Hide the browser's text selection blue shimmer inside chrome */
+.xp-no-select {
+  user-select: none;
+  -webkit-user-select: none;
 }
