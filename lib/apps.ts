@@ -7,6 +7,8 @@ import {
   MyComputerIcon,
   MyDocumentsIcon,
   RecycleBinIcon,
+  AboutMeIcon,
+  PennyIcon,
 } from "@/components/icons/AppIcons";
 import MusicPlayer from "@/components/windows/MusicPlayer";
 import DXBall from "@/components/windows/DXBall";
@@ -15,6 +17,8 @@ import ScreenplayEditor from "@/components/windows/ScreenplayEditor";
 import MyComputer from "@/components/windows/MyComputer";
 import MyDocuments from "@/components/windows/MyDocuments";
 import RecycleBin from "@/components/windows/RecycleBin";
+import AboutWindow from "@/components/windows/AboutWindow";
+import PennyWindow from "@/components/windows/PennyWindow";
 
 export type AppId =
   | "musicPlayer"
@@ -23,7 +27,9 @@ export type AppId =
   | "screenplay"
   | "myComputer"
   | "myDocuments"
-  | "recycleBin";
+  | "recycleBin"
+  | "aboutMe"
+  | "penny";
 
 export interface AppRegistryEntry {
   id: AppId;
@@ -47,6 +53,22 @@ const apps: AppRegistryEntry[] = [
     component: MyComputer,
     defaultPosition: { x: 180, y: 70 },
     defaultSize: { width: 620, height: 440 },
+  },
+  {
+    id: "aboutMe",
+    title: "About Me",
+    icon: (size) => AboutMeIcon({ size }),
+    component: AboutWindow,
+    defaultPosition: { x: 360, y: 80 },
+    defaultSize: { width: 620, height: 580 },
+  },
+  {
+    id: "penny",
+    title: "Penny",
+    icon: (size) => PennyIcon({ size }),
+    component: PennyWindow,
+    defaultPosition: { x: 420, y: 110 },
+    defaultSize: { width: 620, height: 600 },
   },
   {
     id: "myDocuments",

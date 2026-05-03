@@ -149,29 +149,18 @@ export default function Desktop() {
       >
         <BlissWallpaper />
 
-        {/* Desktop icon column */}
-        <div
-          style={{
-            position: "absolute",
-            top: 12,
-            left: 8,
-            display: "flex",
-            flexDirection: "column",
-            gap: 6,
-            zIndex: 10,
-          }}
-        >
-          {apps.map((entry) => (
-            <DesktopIcon
-              key={entry.id}
-              title={entry.desktopLabel ?? entry.title}
-              icon={entry.icon(32)}
-              selected={selectedIcon === entry.id}
-              onSelect={() => setSelectedIcon(entry.id)}
-              onOpen={() => open(entry)}
-            />
-          ))}
-        </div>
+        {/* Desktop icons — absolutely positioned, draggable */}
+        {apps.map((entry, i) => (
+          <DesktopIcon
+            key={entry.id}
+            title={entry.desktopLabel ?? entry.title}
+            icon={entry.icon(32)}
+            selected={selectedIcon === entry.id}
+            defaultPosition={{ x: 8, y: 12 + i * 78 }}
+            onSelect={() => setSelectedIcon(entry.id)}
+            onOpen={() => open(entry)}
+          />
+        ))}
 
         {/* Open windows */}
         {windows.map((w) => {
