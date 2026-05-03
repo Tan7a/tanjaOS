@@ -269,6 +269,62 @@ export function UserAvatarIcon({ size = 48, className }: IconProps) {
   );
 }
 
+export function PennyIcon({ size = 32, className }: IconProps) {
+  return (
+    <svg {...defaults(size)} className={className}>
+      {/* head — white base */}
+      <ellipse cx="16" cy="17" rx="11" ry="9.5" fill="#FFFFFF" stroke="#3A3A3A" strokeWidth="0.8" />
+      {/* black ear (floppy, right) */}
+      <path d="M22 9 Q27 9 27 14 Q27 19 23 19 Q21 17 21 13 Z" fill="#1F1F1F" stroke="#3A3A3A" strokeWidth="0.6" />
+      {/* white-tipped ear (left, smaller) */}
+      <path d="M9 9 Q5 10 5.5 14 Q6 18 10 18 Q11 16 11 13 Z" fill="#1F1F1F" stroke="#3A3A3A" strokeWidth="0.6" />
+      {/* black face patch over right eye */}
+      <path d="M16 12 Q22 11 23 17 Q21 21 16 20 Q14 17 16 12 Z" fill="#1F1F1F" />
+      {/* eyes */}
+      <circle cx="12.2" cy="16" r="1.3" fill="#3A2418" />
+      <circle cx="11.8" cy="15.6" r="0.4" fill="#FFFFFF" />
+      <circle cx="19.5" cy="16" r="1.3" fill="#FFE9C8" />
+      <circle cx="19.1" cy="15.6" r="0.4" fill="#FFFFFF" />
+      {/* snout / nose */}
+      <ellipse cx="16" cy="20.5" rx="2.6" ry="2" fill="#FFFFFF" stroke="#3A3A3A" strokeWidth="0.5" />
+      <ellipse cx="16" cy="20" rx="1.1" ry="0.8" fill="#1F1F1F" />
+      {/* tongue */}
+      <path d="M15 22 Q16 23.5 17 22 L17 23.5 Q16 24.5 15 23.5 Z" fill="#E64585" />
+    </svg>
+  );
+}
+
+export function AboutMeIcon({ size = 32, className }: IconProps) {
+  return (
+    <svg {...defaults(size)} className={className}>
+      <defs>
+        <linearGradient id="aboutCard" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%" stopColor="#FFFFFF" />
+          <stop offset="100%" stopColor="#E8E4D8" />
+        </linearGradient>
+      </defs>
+      {/* user-account card */}
+      <rect x="3" y="5" width="26" height="22" rx="1.5" fill="url(#aboutCard)" stroke="#3A3A3A" strokeWidth="0.8" />
+      {/* red avatar tile */}
+      <rect x="6" y="8" width="11" height="11" rx="1" fill="#E64545" />
+      <rect x="6" y="8" width="11" height="11" rx="1" fill="#FFFFFF" opacity="0.15" />
+      {/* chess-knight silhouette inside the tile */}
+      <path
+        d="M8.5 17.5 L14.5 17.5 L14.5 16.5 Q14 15.6 12.7 14.9 Q12 14.2 12 12.9 Q13.4 12.9 14 11.7 Q13.7 10.4 12.6 9.8 Q11.5 9.3 10.4 9.8 Q9.3 10.4 9.3 11.7 Q9.9 12.9 11.3 12.9 Q11.3 14.2 10.6 14.9 Q9.3 15.6 8.5 16.5 Z"
+        fill="#FFFFFF"
+      />
+      {/* name + lines */}
+      <line x1="19" y1="10" x2="26" y2="10" stroke="#1F4F8B" strokeWidth="1.2" strokeLinecap="round" />
+      <line x1="19" y1="13" x2="26" y2="13" stroke="#9D9888" strokeWidth="0.6" />
+      <line x1="19" y1="15" x2="25" y2="15" stroke="#9D9888" strokeWidth="0.6" />
+      <line x1="19" y1="17" x2="26" y2="17" stroke="#9D9888" strokeWidth="0.6" />
+      {/* footer separator + "OK" pip */}
+      <line x1="6" y1="22" x2="26" y2="22" stroke="#B8B098" strokeWidth="0.5" />
+      <rect x="20" y="23.5" width="6" height="2.5" rx="0.5" fill="#3A6FB5" />
+    </svg>
+  );
+}
+
 export function FolderIcon({ size = 32, className }: IconProps) {
   return (
     <svg {...defaults(size)} className={className}>
