@@ -543,3 +543,47 @@ export function FullRecycleBinIcon({ size = 32, className }: IconProps) {
     </svg>
   );
 }
+
+export function BookshelfIcon({ size = 32, className }: IconProps) {
+  return (
+    <svg {...defaults(size)} className={className}>
+      <defs>
+        <linearGradient id="bookshelfPlank" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%" stopColor="#A87A4B" />
+          <stop offset="100%" stopColor="#6B4A28" />
+        </linearGradient>
+        <linearGradient id="bookRed" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%" stopColor="#E64545" />
+          <stop offset="100%" stopColor="#9A2B2B" />
+        </linearGradient>
+        <linearGradient id="bookBlue" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%" stopColor="#3A8BD8" />
+          <stop offset="100%" stopColor="#1F4D8C" />
+        </linearGradient>
+        <linearGradient id="bookGreen" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%" stopColor="#6BBF6B" />
+          <stop offset="100%" stopColor="#2E5E2E" />
+        </linearGradient>
+        <linearGradient id="bookYellow" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%" stopColor="#F2C14E" />
+          <stop offset="100%" stopColor="#B8862E" />
+        </linearGradient>
+      </defs>
+      {/* Books standing up */}
+      <rect x="5" y="6" width="4" height="20" fill="url(#bookRed)" stroke="#5A1A1A" strokeWidth="0.6" />
+      <rect x="9" y="8" width="3" height="18" fill="url(#bookYellow)" stroke="#8A6420" strokeWidth="0.6" />
+      <rect x="12" y="5" width="5" height="21" fill="url(#bookBlue)" stroke="#152E5E" strokeWidth="0.6" />
+      <rect x="17" y="7" width="4" height="19" fill="url(#bookGreen)" stroke="#1A3F1A" strokeWidth="0.6" />
+      <rect x="21" y="9" width="3" height="17" fill="url(#bookRed)" stroke="#5A1A1A" strokeWidth="0.6" />
+      {/* Book spine details */}
+      <line x1="5" y1="10" x2="9" y2="10" stroke="#FFFFFF" strokeWidth="0.4" opacity="0.6" />
+      <line x1="12" y1="9" x2="17" y2="9" stroke="#FFFFFF" strokeWidth="0.4" opacity="0.6" />
+      <line x1="17" y1="11" x2="21" y2="11" stroke="#FFFFFF" strokeWidth="0.4" opacity="0.6" />
+      {/* Stacked book on right */}
+      <rect x="24" y="22" width="5" height="2" fill="#A8743A" stroke="#5A3A18" strokeWidth="0.4" />
+      <rect x="24" y="24" width="5" height="2" fill="#7A4A8A" stroke="#3A1A4A" strokeWidth="0.4" />
+      {/* Shelf plank */}
+      <rect x="3" y="26" width="27" height="2.5" fill="url(#bookshelfPlank)" stroke="#3A2410" strokeWidth="0.5" />
+    </svg>
+  );
+}
