@@ -9,6 +9,7 @@ import {
   RecycleBinIcon,
   AboutMeIcon,
   PennyIcon,
+  BookshelfIcon,
 } from "@/components/icons/AppIcons";
 import MusicPlayer from "@/components/windows/MusicPlayer";
 import DXBall from "@/components/windows/DXBall";
@@ -19,6 +20,7 @@ import MyDocuments from "@/components/windows/MyDocuments";
 import RecycleBin from "@/components/windows/RecycleBin";
 import AboutWindow from "@/components/windows/AboutWindow";
 import PennyWindow from "@/components/windows/PennyWindow";
+import Bookshelf from "@/components/windows/Bookshelf";
 
 export type AppId =
   | "musicPlayer"
@@ -29,7 +31,8 @@ export type AppId =
   | "myDocuments"
   | "recycleBin"
   | "aboutMe"
-  | "penny";
+  | "penny"
+  | "bookshelf";
 
 export interface AppRegistryEntry {
   id: AppId;
@@ -69,6 +72,15 @@ const apps: AppRegistryEntry[] = [
     component: PennyWindow,
     defaultPosition: { x: 420, y: 110 },
     defaultSize: { width: 620, height: 600 },
+  },
+  {
+    id: "bookshelf",
+    title: "Tanja's Bookshelf - Microsoft Internet Explorer",
+    desktopLabel: "Bookshelf",
+    icon: (size) => BookshelfIcon({ size }),
+    component: Bookshelf,
+    defaultPosition: { x: 200, y: 40 },
+    defaultSize: { width: 980, height: 680 },
   },
   {
     id: "myDocuments",
