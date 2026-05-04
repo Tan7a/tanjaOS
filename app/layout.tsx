@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import "./globals.css";
+import { DialUpProvider } from "@/lib/dialup-context";
 
 export const metadata: Metadata = {
   title: "TanjaXP",
@@ -13,7 +14,9 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" className="h-full">
-      <body className="h-full">{children}</body>
+      <body className="h-full">
+        <DialUpProvider>{children}</DialUpProvider>
+      </body>
     </html>
   );
 }

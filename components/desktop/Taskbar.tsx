@@ -1,8 +1,14 @@
 "use client";
 
 import { useEffect, useState, type ReactNode } from "react";
-import { WindowsFlagIcon, VolumeIcon, NetworkIcon } from "@/components/icons/AppIcons";
+import {
+  WindowsFlagIcon,
+  VolumeIcon,
+  NetworkIcon,
+  ConnectedNetworkIcon,
+} from "@/components/icons/AppIcons";
 import type { AppRegistryEntry, AppId } from "@/lib/apps";
+import { useDialUp } from "@/lib/dialup-context";
 
 export interface TaskbarWindow {
   id: AppId;
@@ -165,6 +171,7 @@ function TaskbarButton({
 
 function SystemTray() {
   const [time, setTime] = useState<string>(() => formatNow());
+  const { isConnected } = useDialUp();
 
   useEffect(() => {
     const tick = () => setTime(formatNow());
@@ -191,7 +198,15 @@ function SystemTray() {
       }}
     >
       <VolumeIcon size={14} />
-      <NetworkIcon size={14} />
+      {isConnected ? (
+        <span title="Connected to TanjaNet">
+          <ConnectedNetworkIcon size={14} />
+        </span>
+      ) : (
+        <span title="Not connected">
+          <NetworkIcon size={14} />
+        </span>
+      )}
       <span>{time}</span>
     </div>
   );
