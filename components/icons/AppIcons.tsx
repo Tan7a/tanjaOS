@@ -587,3 +587,36 @@ export function BookshelfIcon({ size = 32, className }: IconProps) {
     </svg>
   );
 }
+
+export function TerminalIcon({ size = 32, className }: IconProps) {
+  const s = size;
+  return (
+    <svg width={s} height={s} viewBox="0 0 32 32" className={className} aria-hidden="true">
+      <defs>
+        <linearGradient id="termFrame" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%" stopColor="#E8E4D4" />
+          <stop offset="100%" stopColor="#B8B098" />
+        </linearGradient>
+        <linearGradient id="termTitle" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%" stopColor="#0058E0" />
+          <stop offset="100%" stopColor="#3A93FF" />
+        </linearGradient>
+      </defs>
+      {/* Outer beige window frame */}
+      <rect x="2" y="3" width="28" height="26" rx="1.5" fill="url(#termFrame)" stroke="#5A5A5A" strokeWidth="0.6" />
+      {/* Title bar */}
+      <rect x="2.5" y="3.5" width="27" height="4.5" rx="0.5" fill="url(#termTitle)" />
+      <circle cx="27" cy="5.7" r="0.9" fill="#FFFFFF" opacity="0.85" />
+      <circle cx="24.5" cy="5.7" r="0.9" fill="#FFFFFF" opacity="0.5" />
+      {/* Black screen */}
+      <rect x="3.5" y="9" width="25" height="19" fill="#000000" />
+      {/* Prompt text */}
+      <text x="5" y="16" fontFamily="Consolas, 'Lucida Console', monospace" fontSize="5" fill="#FFFFFF">C:\&gt;</text>
+      {/* Blinking caret look */}
+      <rect x="14.5" y="12.5" width="2.2" height="4.5" fill="#FFFFFF" />
+      {/* Faint scanline shimmer */}
+      <line x1="3.5" y1="20" x2="28.5" y2="20" stroke="#FFFFFF" strokeWidth="0.3" opacity="0.08" />
+      <line x1="3.5" y1="24" x2="28.5" y2="24" stroke="#FFFFFF" strokeWidth="0.3" opacity="0.08" />
+    </svg>
+  );
+}

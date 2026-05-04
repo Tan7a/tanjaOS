@@ -149,14 +149,16 @@ export default function Desktop() {
       >
         <BlissWallpaper />
 
-        {/* Desktop icons — absolutely positioned, draggable */}
+        {/* Desktop icons — anchor-positioned, draggable */}
         {apps.map((entry, i) => (
           <DesktopIcon
             key={entry.id}
             title={entry.desktopLabel ?? entry.title}
             icon={entry.icon(32)}
             selected={selectedIcon === entry.id}
-            defaultPosition={{ x: 8, y: 12 + i * 78 }}
+            position={
+              entry.desktopIcon ?? { anchor: "tl", x: 8, y: 12 + i * 78 }
+            }
             onSelect={() => setSelectedIcon(entry.id)}
             onOpen={() => open(entry)}
           />

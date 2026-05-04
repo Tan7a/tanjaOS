@@ -1,35 +1,48 @@
 "use client";
 
 import Draggable from "react-draggable";
-import { useRef, type ReactNode } from "react";
+import { useRef, type ReactNode, type CSSProperties } from "react";
+import type { DesktopIconPosition } from "@/lib/apps";
 
 interface DesktopIconProps {
   title: string;
   icon: ReactNode;
   selected: boolean;
-  defaultPosition: { x: number; y: number };
+  position: DesktopIconPosition;
   onSelect: () => void;
   onOpen: () => void;
+}
+
+function anchorToCss(pos: DesktopIconPosition): CSSProperties {
+  const anchor = pos.anchor ?? "tl";
+  const css: CSSProperties = { position: "absolute" };
+  if (anchor[0] === "t") css.top = pos.y;
+  else css.bottom = pos.y;
+  if (anchor[1] === "l") css.left = pos.x;
+  else css.right = pos.x;
+  return css;
 }
 
 export default function DesktopIcon({
   title,
   icon,
   selected,
-  defaultPosition,
+  position,
   onSelect,
   onOpen,
 }: DesktopIconProps) {
   const nodeRef = useRef<HTMLDivElement>(null!);
 
   return (
-    <Draggable nodeRef={nodeRef} defaultPosition={defaultPosition} bounds="parent">
+    <Draggable
+      nodeRef={nodeRef}
+      defaultPosition={{ x: 0, y: 0 }}
+      bounds="parent"
+    >
       <div
         ref={nodeRef}
         style={{
-          position: "absolute",
-          top: 0,
-          left: 0,
+          ...anchorToCss(position),
           zIndex: 10,
           width: 80,
         }}

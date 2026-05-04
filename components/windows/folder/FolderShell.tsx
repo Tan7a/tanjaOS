@@ -23,6 +23,12 @@ interface FolderShellProps {
   emptyMessage?: string;
   /** Status-bar text shown bottom-left, e.g. "8 objects" */
   itemNoun?: string;
+  /** Fired on double-click of an item. */
+  onItemOpen?: (name: string) => void;
+  /** Toolbar Back button. Disabled when omitted. */
+  onBack?: () => void;
+  /** Toolbar Up button. Disabled when omitted. */
+  onUp?: () => void;
 }
 
 export default function FolderShell({
@@ -33,6 +39,9 @@ export default function FolderShell({
   files,
   emptyMessage,
   itemNoun = "objects",
+  onItemOpen,
+  onBack,
+  onUp,
 }: FolderShellProps) {
   const [selected, setSelected] = useState<string | null>(null);
 
@@ -76,9 +85,9 @@ export default function FolderShell({
           borderBottom: "1px solid #B8B098",
         }}
       >
-        <ToolbarButton label="Back" arrow="◀" />
+        <ToolbarButton label="Back" arrow="◀" onClick={onBack} disabled={!onBack} />
         <ToolbarButton label="Forward" arrow="▶" disabled />
-        <ToolbarButton label="Up" arrow="↑" />
+        <ToolbarButton label="Up" arrow="↑" onClick={onUp} disabled={!onUp} />
         <span style={{ width: 1, height: 22, background: "#B8B098", margin: "0 4px" }} />
         <span style={{ fontSize: 11 }}>Address</span>
         <div
@@ -163,6 +172,10 @@ export default function FolderShell({
                     e.stopPropagation();
                     setSelected(f.name);
                   }}
+                  onDoubleClick={(e) => {
+                    e.stopPropagation();
+                    onItemOpen?.(f.name);
+                  }}
                   style={{
                     display: "flex",
                     flexDirection: "column",
@@ -245,15 +258,18 @@ function ToolbarButton({
   label,
   arrow,
   disabled,
+  onClick,
 }: {
   label: string;
   arrow: string;
   disabled?: boolean;
+  onClick?: () => void;
 }) {
   return (
     <button
       disabled={disabled}
       onMouseDown={(e) => e.stopPropagation()}
+      onClick={onClick}
       style={{
         display: "flex",
         alignItems: "center",
@@ -263,7 +279,7 @@ function ToolbarButton({
         border: "1px solid transparent",
         opacity: disabled ? 0.45 : 1,
         fontSize: 11,
-        cursor: "default",
+        cursor: disabled ? "default" : "pointer",
       }}
     >
       <span>{arrow}</span> {label}
