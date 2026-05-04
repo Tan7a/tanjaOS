@@ -55,25 +55,41 @@ a * {
   cursor: pointer;
 }
 
-/* Sheep head-bob animation (Music Player) */
-@keyframes headBob {
-  0%, 100% {
-    transform: translateY(0) rotate(0deg);
-  }
-  25% {
-    transform: translateY(-4px) rotate(-3deg);
-  }
-  75% {
-    transform: translateY(-2px) rotate(2deg);
-  }
+/* Sheep walking-leg animation (Music Player) */
+@keyframes legLiftA {
+  0%, 100% { transform: translateY(0); }
+  50%      { transform: translateY(-3px); }
+}
+@keyframes legLiftB {
+  0%, 100% { transform: translateY(-3px); }
+  50%      { transform: translateY(0); }
+}
+
+.sheep-leg {
+  transform-box: fill-box;
+  transform-origin: top center;
+}
+
+.sheep-leg--walking.sheep-leg--a {
+  animation: legLiftA 600ms ease-in-out infinite;
+}
+.sheep-leg--walking.sheep-leg--b {
+  animation: legLiftB 600ms ease-in-out infinite;
+}
+
+/* Sheep head subtle bob (Music Player) — runs alongside legs while playing */
+@keyframes sheepHeadBob {
+  0%, 100% { transform: translateY(0) rotate(0deg); }
+  50%      { transform: translateY(-2px) rotate(-1.5deg); }
 }
 
 .sheep-head {
-  transform-origin: center bottom;
+  transform-box: fill-box;
+  transform-origin: 50% 80%;
 }
 
 .sheep-head--bobbing {
-  animation: headBob 500ms ease-in-out infinite;
+  animation: sheepHeadBob 800ms ease-in-out infinite;
 }
 
 /* XP raised/sunken edge helpers used by chrome */
