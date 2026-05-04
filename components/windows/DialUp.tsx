@@ -19,7 +19,7 @@ const STAGES: Stage[] = [
   { label: "Connected!", from: 85, to: 100 },
 ];
 
-const TOTAL_MS = 7000;
+const TOTAL_MS = 28000;
 
 export default function DialUp() {
   const { isConnected, connect, disconnect } = useDialUp();
@@ -338,7 +338,7 @@ function DialingView({
           alignItems: "flex-start",
         }}
       >
-        <ModemIcon size={48} />
+        <ConnectingDuo />
         <div style={{ flex: 1, minWidth: 0 }}>
           <h2 style={{ margin: 0, fontSize: 13, fontWeight: "bold" }}>
             Connecting to TanjaNet...
@@ -499,6 +499,8 @@ const inputStyle: React.CSSProperties = {
 };
 
 function ProgressBar({ progress }: { progress: number }) {
+  const SEGMENTS = 16;
+  const filled = Math.round((progress / 100) * SEGMENTS);
   return (
     <div
       style={{
@@ -506,22 +508,113 @@ function ProgressBar({ progress }: { progress: number }) {
         border: "1px solid #5A5A5A",
         background: "#FFFFFF",
         boxShadow: "inset 1px 1px 0 #B8B098",
-        position: "relative",
-        overflow: "hidden",
+        padding: 2,
+        display: "flex",
+        gap: 2,
       }}
     >
-      <div
-        style={{
-          width: `${progress}%`,
-          height: "100%",
-          background:
-            "linear-gradient(to right, #5BC04C 0%, #7BD27B 50%, #5BC04C 100%)",
-          transition: "width 80ms linear",
-          backgroundSize: "16px 16px",
-          backgroundImage:
-            "linear-gradient(135deg, rgba(255,255,255,0.3) 25%, transparent 25%, transparent 50%, rgba(255,255,255,0.3) 50%, rgba(255,255,255,0.3) 75%, transparent 75%, transparent)",
-        }}
-      />
+      {Array.from({ length: SEGMENTS }).map((_, i) => (
+        <div
+          key={i}
+          style={{
+            flex: 1,
+            background:
+              i < filled
+                ? "linear-gradient(to bottom, #2A56B0 0%, #0A246A 50%, #051642 100%)"
+                : "transparent",
+            transition: "background 100ms linear",
+          }}
+        />
+      ))}
+    </div>
+  );
+}
+
+function ConnectingDuo() {
+  return (
+    <div
+      style={{
+        width: 88,
+        height: 48,
+        flexShrink: 0,
+        position: "relative",
+      }}
+    >
+      <style>{`
+        @keyframes dialup-paper-fly {
+          0%   { transform: translate(26px, 14px); opacity: 0; }
+          12%  { opacity: 1; }
+          88%  { opacity: 1; }
+          100% { transform: translate(58px, 14px); opacity: 0; }
+        }
+      `}</style>
+      <svg viewBox="0 0 88 48" width="88" height="48" style={{ display: "block" }}>
+        <defs>
+          <radialGradient id="dialupSmallGlobe" cx="40%" cy="35%" r="65%">
+            <stop offset="0%" stopColor="#A8E0FF" />
+            <stop offset="55%" stopColor="#3A8FE0" />
+            <stop offset="100%" stopColor="#1A4FB8" />
+          </radialGradient>
+          <linearGradient id="dialupSmallFolder" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stopColor="#FFE49A" />
+            <stop offset="100%" stopColor="#D9A53F" />
+          </linearGradient>
+          <linearGradient id="dialupSmallFolderTab" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stopColor="#FFD66B" />
+            <stop offset="100%" stopColor="#C8932F" />
+          </linearGradient>
+        </defs>
+
+        {/* Globe on left */}
+        <g transform="translate(14, 24)">
+          <circle r="11" fill="url(#dialupSmallGlobe)" stroke="#0A2F6B" strokeWidth="0.6" />
+          <ellipse rx="11" ry="4" fill="none" stroke="#FFFFFF" strokeWidth="0.4" opacity="0.6" />
+          <ellipse rx="4" ry="11" fill="none" stroke="#FFFFFF" strokeWidth="0.4" opacity="0.6" />
+          {/* continents */}
+          <path d="M-7 -3 Q-3 -6 1 -4 Q5 -2 3 1 Q-1 3 -5 1 Q-7 -1 -7 -3 Z" fill="#3D7A1A" opacity="0.9" />
+          <path d="M-2 4 Q3 3 4 6 Q3 7 -1 6 Z" fill="#3D7A1A" opacity="0.9" />
+          <path d="M-9 0 Q-7 -1 -8 1 Z" fill="#3D7A1A" opacity="0.7" />
+        </g>
+
+        {/* Folder on right */}
+        <g transform="translate(72, 24)">
+          {/* back tab */}
+          <path
+            d="M-10 -7 L-3 -7 L-1 -5 L10 -5 L10 -1 L-10 -1 Z"
+            fill="url(#dialupSmallFolderTab)"
+            stroke="#8A6418"
+            strokeWidth="0.5"
+          />
+          {/* front pocket */}
+          <path
+            d="M-10 -3 L10 -3 L10 7 L-10 7 Z"
+            fill="url(#dialupSmallFolder)"
+            stroke="#8A6418"
+            strokeWidth="0.5"
+          />
+          {/* highlight */}
+          <path d="M-9 -2 L9 -2 L9 0 Q0 -1 -9 1 Z" fill="#FFFFFF" opacity="0.35" />
+        </g>
+
+        {/* Animated paper flying from globe to folder */}
+        <g style={{ animation: "dialup-paper-fly 1.4s linear infinite" }}>
+          <rect
+            x="0"
+            y="0"
+            width="7"
+            height="9"
+            fill="#FFFFFF"
+            stroke="#3A3A3A"
+            strokeWidth="0.5"
+          />
+          <line x1="1.5" y1="2.2" x2="5.5" y2="2.2" stroke="#9D9888" strokeWidth="0.4" />
+          <line x1="1.5" y1="4" x2="5.5" y2="4" stroke="#9D9888" strokeWidth="0.4" />
+          <line x1="1.5" y1="5.8" x2="4.5" y2="5.8" stroke="#9D9888" strokeWidth="0.4" />
+          <line x1="1.5" y1="7.2" x2="5" y2="7.2" stroke="#9D9888" strokeWidth="0.4" />
+          {/* folded corner */}
+          <path d="M5 0 L7 0 L7 2 Z" fill="#DCD6C0" stroke="#3A3A3A" strokeWidth="0.4" />
+        </g>
+      </svg>
     </div>
   );
 }
