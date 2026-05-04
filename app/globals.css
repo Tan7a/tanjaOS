@@ -32,6 +32,7 @@ html,
 body {
   height: 100%;
   overflow: hidden;
+  overscroll-behavior: none;
 }
 
 body {
@@ -41,6 +42,13 @@ body {
   background: #2A6FCB;
   cursor: default;
   -webkit-font-smoothing: antialiased;
+  -webkit-tap-highlight-color: transparent;
+}
+
+@media (max-width: 767px) {
+  :root {
+    --xp-taskbar-height: 40px;
+  }
 }
 
 /* XP authenticity: default cursor everywhere except real links */

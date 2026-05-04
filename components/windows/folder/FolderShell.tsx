@@ -2,6 +2,7 @@
 
 import { useState, type ReactNode } from "react";
 import { FolderIcon } from "@/components/icons/AppIcons";
+import { useViewportMode } from "@/lib/useViewportMode";
 
 export interface FolderFile {
   name: string;
@@ -44,6 +45,8 @@ export default function FolderShell({
   onUp,
 }: FolderShellProps) {
   const [selected, setSelected] = useState<string | null>(null);
+  const mode = useViewportMode();
+  const isMobile = mode === "mobile";
 
   return (
     <div
@@ -109,14 +112,14 @@ export default function FolderShell({
 
       {/* Body */}
       <div style={{ flex: 1, minHeight: 0, display: "flex" }}>
-        {/* Sidebar */}
+        {/* Sidebar — hidden on mobile to give the icon grid the full width */}
         <div
           style={{
+            display: isMobile ? "none" : "flex",
             width: 180,
             background: "linear-gradient(to bottom, #7AA9E8, #4080CC)",
             color: "#FFFFFF",
             padding: 8,
-            display: "flex",
             flexDirection: "column",
             gap: 12,
             flexShrink: 0,

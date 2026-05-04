@@ -1,7 +1,8 @@
 "use client";
 
 import Draggable, { type DraggableEventHandler } from "react-draggable";
-import { useRef, type ReactNode } from "react";
+import { useRef, useState, type ReactNode } from "react";
+import { useViewportMode } from "@/lib/useViewportMode";
 
 interface WindowProps {
   id: string;
@@ -15,6 +16,7 @@ interface WindowProps {
   onMinimize: () => void;
   onFocus: () => void;
   onPositionChange?: (pos: { x: number; y: number }) => void;
+  mobileNote?: string;
   children: ReactNode;
 }
 
@@ -29,9 +31,13 @@ export default function Window({
   onMinimize,
   onFocus,
   onPositionChange,
+  mobileNote,
   children,
 }: WindowProps) {
   const nodeRef = useRef<HTMLDivElement>(null!);
+  const mode = useViewportMode();
+  const [noteDismissed, setNoteDismissed] = useState(false);
+  const isMobile = mode === "mobile";
 
   const handleStop: DraggableEventHandler = (_e, data) => {
     onPositionChange?.({ x: data.x, y: data.y });
@@ -40,6 +46,137 @@ export default function Window({
   const titleBarBg = isActive
     ? "linear-gradient(to right, var(--xp-title-active-start), var(--xp-title-active-end))"
     : "linear-gradient(to right, var(--xp-title-inactive-start), var(--xp-title-inactive-end))";
+
+  const showMobileNote = isMobile && !!mobileNote && !noteDismissed;
+
+  const frame = (
+    <div
+      ref={nodeRef}
+      onMouseDown={onFocus}
+      onTouchStart={onFocus}
+      className={isMobile ? "xp-no-select" : "absolute xp-no-select"}
+      style={{
+        ...(isMobile
+          ? {
+              position: "fixed",
+              left: 0,
+              top: 0,
+              width: "100vw",
+              height: "calc(100vh - var(--xp-taskbar-height))",
+              borderTopLeftRadius: 0,
+              borderTopRightRadius: 0,
+              border: "none",
+              borderBottom: "1px solid var(--xp-window-border)",
+              boxShadow: "none",
+            }
+          : {
+              width: initialSize.width,
+              height: initialSize.height,
+              border: "3px solid var(--xp-window-border)",
+              borderTopLeftRadius: 8,
+              borderTopRightRadius: 8,
+              boxShadow:
+                "inset 0 0 0 1px #80B0FF, 2px 2px 8px rgba(0, 0, 0, 0.4)",
+            }),
+        zIndex,
+        background: "var(--xp-window-bg)",
+        fontFamily: "var(--xp-font)",
+        fontSize: "var(--xp-font-size)",
+        display: "flex",
+        flexDirection: "column",
+        overflow: "hidden",
+      }}
+    >
+      {/* Title bar */}
+      <div
+        className="xp-titlebar"
+        style={{
+          height: isMobile ? 32 : 28,
+          flexShrink: 0,
+          display: "flex",
+          alignItems: "center",
+          paddingLeft: 4,
+          paddingRight: 4,
+          gap: 6,
+          background: titleBarBg,
+          color: "var(--xp-text-on-title)",
+          cursor: "default",
+          borderBottom: "1px solid #1A4FB8",
+          touchAction: "manipulation",
+        }}
+      >
+        {icon ? (
+          <span
+            style={{
+              width: 16,
+              height: 16,
+              display: "inline-flex",
+              alignItems: "center",
+              justifyContent: "center",
+              flexShrink: 0,
+            }}
+          >
+            {icon}
+          </span>
+        ) : null}
+        <span
+          style={{
+            flex: 1,
+            fontWeight: "bold",
+            fontSize: 11,
+            overflow: "hidden",
+            whiteSpace: "nowrap",
+            textOverflow: "ellipsis",
+            textShadow: "1px 1px 0 rgba(0, 0, 0, 0.4)",
+          }}
+        >
+          {title}
+        </span>
+
+        <div style={{ display: "flex", gap: 2, flexShrink: 0 }}>
+          <TitleButton
+            type="minimize"
+            onClick={(e) => {
+              e.stopPropagation();
+              onMinimize();
+            }}
+          />
+          {!isMobile && (
+            <TitleButton type="maximize" onClick={(e) => e.stopPropagation()} />
+          )}
+          <TitleButton
+            type="close"
+            onClick={(e) => {
+              e.stopPropagation();
+              onClose();
+            }}
+          />
+        </div>
+      </div>
+
+      {showMobileNote && (
+        <MobileNote text={mobileNote!} onDismiss={() => setNoteDismissed(true)} />
+      )}
+
+      {/* Content */}
+      <div
+        style={{
+          flex: 1,
+          background: "var(--xp-window-bg)",
+          overflow: "hidden",
+          display: "flex",
+          flexDirection: "column",
+          minHeight: 0,
+        }}
+      >
+        {children}
+      </div>
+    </div>
+  );
+
+  if (isMobile) {
+    return frame;
+  }
 
   return (
     <Draggable
@@ -50,106 +187,63 @@ export default function Window({
       onStop={handleStop}
       onStart={onFocus}
     >
-      <div
-        ref={nodeRef}
-        onMouseDown={onFocus}
-        className="absolute xp-no-select"
+      {frame}
+    </Draggable>
+  );
+}
+
+function MobileNote({ text, onDismiss }: { text: string; onDismiss: () => void }) {
+  return (
+    <div
+      style={{
+        flexShrink: 0,
+        display: "flex",
+        alignItems: "center",
+        gap: 8,
+        padding: "6px 8px",
+        background: "#FFF8C5",
+        borderBottom: "1px solid #B8B098",
+        fontFamily: "var(--xp-font)",
+        fontSize: 11,
+        color: "#5A4A10",
+      }}
+    >
+      <span
+        aria-hidden
         style={{
-          width: initialSize.width,
-          height: initialSize.height,
-          zIndex,
-          background: "var(--xp-window-bg)",
-          border: "3px solid var(--xp-window-border)",
-          borderTopLeftRadius: 8,
-          borderTopRightRadius: 8,
-          boxShadow:
-            "inset 0 0 0 1px #80B0FF, 2px 2px 8px rgba(0, 0, 0, 0.4)",
-          fontFamily: "var(--xp-font)",
-          fontSize: "var(--xp-font-size)",
-          display: "flex",
-          flexDirection: "column",
-          overflow: "hidden",
+          width: 18,
+          height: 18,
+          flexShrink: 0,
+          background: "#1F70D2",
+          color: "#FFFFFF",
+          borderRadius: "50%",
+          display: "inline-flex",
+          alignItems: "center",
+          justifyContent: "center",
+          fontWeight: "bold",
+          fontSize: 12,
         }}
       >
-        {/* Title bar */}
-        <div
-          className="xp-titlebar"
-          style={{
-            height: 28,
-            flexShrink: 0,
-            display: "flex",
-            alignItems: "center",
-            paddingLeft: 4,
-            paddingRight: 4,
-            gap: 6,
-            background: titleBarBg,
-            color: "var(--xp-text-on-title)",
-            cursor: "default",
-            borderBottom: "1px solid #1A4FB8",
-          }}
-        >
-          {icon ? (
-            <span
-              style={{
-                width: 16,
-                height: 16,
-                display: "inline-flex",
-                alignItems: "center",
-                justifyContent: "center",
-                flexShrink: 0,
-              }}
-            >
-              {icon}
-            </span>
-          ) : null}
-          <span
-            style={{
-              flex: 1,
-              fontWeight: "bold",
-              fontSize: 11,
-              overflow: "hidden",
-              whiteSpace: "nowrap",
-              textOverflow: "ellipsis",
-              textShadow: "1px 1px 0 rgba(0, 0, 0, 0.4)",
-            }}
-          >
-            {title}
-          </span>
-
-          <div style={{ display: "flex", gap: 2, flexShrink: 0 }}>
-            <TitleButton
-              type="minimize"
-              onClick={(e) => {
-                e.stopPropagation();
-                onMinimize();
-              }}
-            />
-            <TitleButton type="maximize" onClick={(e) => e.stopPropagation()} />
-            <TitleButton
-              type="close"
-              onClick={(e) => {
-                e.stopPropagation();
-                onClose();
-              }}
-            />
-          </div>
-        </div>
-
-        {/* Content */}
-        <div
-          style={{
-            flex: 1,
-            background: "var(--xp-window-bg)",
-            overflow: "hidden",
-            display: "flex",
-            flexDirection: "column",
-            minHeight: 0,
-          }}
-        >
-          {children}
-        </div>
-      </div>
-    </Draggable>
+        i
+      </span>
+      <span style={{ flex: 1, lineHeight: 1.3 }}>{text}</span>
+      <button
+        onClick={onDismiss}
+        onMouseDown={(e) => e.stopPropagation()}
+        style={{
+          flexShrink: 0,
+          padding: "2px 10px",
+          fontFamily: "var(--xp-font)",
+          fontSize: 11,
+          background: "linear-gradient(to bottom, #F8F6EC, #DCD6C0)",
+          border: "1px solid #8A8270",
+          borderRadius: 3,
+          cursor: "default",
+        }}
+      >
+        OK
+      </button>
+    </div>
   );
 }
 
@@ -172,6 +266,7 @@ function TitleButton({
     <button
       onClick={onClick}
       onMouseDown={(e) => e.stopPropagation()}
+      onTouchStart={(e) => e.stopPropagation()}
       aria-label={type}
       style={{
         width: 22,
@@ -186,6 +281,7 @@ function TitleButton({
         justifyContent: "center",
         position: "relative",
         boxShadow: "inset 0 1px 0 rgba(255, 255, 255, 0.4)",
+        touchAction: "manipulation",
       }}
     >
       <ButtonGlyph type={type} />

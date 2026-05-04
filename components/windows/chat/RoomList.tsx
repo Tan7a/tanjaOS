@@ -14,6 +14,8 @@ interface RoomListProps {
   selectedId: string | null;
   onSelect: (id: string) => void;
   onCreate: (name: string, description: string) => Promise<string | null>;
+  /** When true, renders as a top horizontal strip instead of a left sidebar (for mobile). */
+  stacked?: boolean;
 }
 
 export default function RoomList({
@@ -21,6 +23,7 @@ export default function RoomList({
   selectedId,
   onSelect,
   onCreate,
+  stacked,
 }: RoomListProps) {
   const [creating, setCreating] = useState(false);
   const [name, setName] = useState("");
@@ -54,9 +57,11 @@ export default function RoomList({
   return (
     <div
       style={{
-        width: 180,
+        width: stacked ? "auto" : 180,
+        maxHeight: stacked ? "40vh" : "none",
         flexShrink: 0,
-        borderRight: "1px solid #B8B098",
+        borderRight: stacked ? "none" : "1px solid #B8B098",
+        borderBottom: stacked ? "1px solid #B8B098" : "none",
         background: "#FFFFFF",
         display: "flex",
         flexDirection: "column",
