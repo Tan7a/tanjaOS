@@ -588,6 +588,201 @@ export function BookshelfIcon({ size = 32, className }: IconProps) {
   );
 }
 
+export function MyWorkIcon({ size = 32, className }: IconProps) {
+  return (
+    <svg {...defaults(size)} className={className}>
+      <defs>
+        <linearGradient id="briefcaseBody" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%" stopColor="#A8743A" />
+          <stop offset="100%" stopColor="#5A3A18" />
+        </linearGradient>
+        <linearGradient id="briefcaseTop" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%" stopColor="#C8884A" />
+          <stop offset="100%" stopColor="#7A4A28" />
+        </linearGradient>
+      </defs>
+      {/* handle */}
+      <path d="M12 7 Q12 4 16 4 Q20 4 20 7" stroke="#3A2410" strokeWidth="1.2" fill="none" strokeLinecap="round" />
+      {/* briefcase body */}
+      <rect x="3" y="9" width="26" height="18" rx="1.5" fill="url(#briefcaseBody)" stroke="#3A2410" strokeWidth="0.8" />
+      <rect x="3" y="9" width="26" height="3" fill="url(#briefcaseTop)" />
+      {/* clasp */}
+      <rect x="14" y="9" width="4" height="3" fill="#F2C636" stroke="#8A6420" strokeWidth="0.5" />
+      <rect x="15" y="13" width="2" height="2" fill="#F2C636" stroke="#8A6420" strokeWidth="0.4" />
+      {/* paper peeking */}
+      <rect x="6" y="16" width="20" height="9" fill="#FFFFFF" stroke="#3A2410" strokeWidth="0.4" />
+      <line x1="8" y1="19" x2="24" y2="19" stroke="#5A6B82" strokeWidth="0.5" />
+      <line x1="8" y1="21" x2="24" y2="21" stroke="#5A6B82" strokeWidth="0.5" />
+      <line x1="8" y1="23" x2="20" y2="23" stroke="#5A6B82" strokeWidth="0.5" />
+    </svg>
+  );
+}
+
+export function FavoritesIcon({ size = 32, className }: IconProps) {
+  return (
+    <svg {...defaults(size)} className={className}>
+      <defs>
+        <linearGradient id="favStar" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%" stopColor="#FFE574" />
+          <stop offset="55%" stopColor="#F2C636" />
+          <stop offset="100%" stopColor="#A87A14" />
+        </linearGradient>
+      </defs>
+      {/* five-point star */}
+      <path
+        d="M16 4 L19.4 12.2 L28 13 L21.5 18.7 L23.5 27 L16 22.6 L8.5 27 L10.5 18.7 L4 13 L12.6 12.2 Z"
+        fill="url(#favStar)"
+        stroke="#7A5A10"
+        strokeWidth="0.8"
+        strokeLinejoin="round"
+      />
+      <path
+        d="M16 6 L18.7 12.6 L24 13.4 L20 17"
+        fill="none"
+        stroke="#FFFFFF"
+        strokeWidth="0.8"
+        opacity="0.6"
+        strokeLinecap="round"
+      />
+    </svg>
+  );
+}
+
+export function ModemIcon({ size = 32, className }: IconProps) {
+  return (
+    <svg {...defaults(size)} className={className}>
+      <defs>
+        <linearGradient id="modemBody" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%" stopColor="#E8E4D8" />
+          <stop offset="100%" stopColor="#9D9888" />
+        </linearGradient>
+      </defs>
+      {/* phone receiver */}
+      <path d="M5 14 L9 10 L13 14 L11 16 Q14 19 17 22 L19 20 L23 24 L19 28 Q12 28 5 21 Z" fill="#3A6FB5" stroke="#0A2F6B" strokeWidth="0.8" />
+      {/* modem box */}
+      <rect x="14" y="6" width="14" height="10" rx="1.5" fill="url(#modemBody)" stroke="#3A3A3A" strokeWidth="0.7" />
+      <circle cx="17" cy="11" r="1.2" fill="#5BC04C" />
+      <circle cx="21" cy="11" r="1.2" fill="#F2C636" />
+      <circle cx="25" cy="11" r="1.2" fill="#E64545" />
+      <line x1="16" y1="14" x2="26" y2="14" stroke="#3A3A3A" strokeWidth="0.4" />
+      {/* cord */}
+      <path d="M21 16 Q22 18 19 19 Q16 20 17 22" stroke="#3A3A3A" strokeWidth="0.8" fill="none" />
+    </svg>
+  );
+}
+
+export function PaintIcon({ size = 32, className }: IconProps) {
+  return (
+    <svg {...defaults(size)} className={className}>
+      <defs>
+        <linearGradient id="palette" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%" stopColor="#F0E0BC" />
+          <stop offset="100%" stopColor="#C8A872" />
+        </linearGradient>
+      </defs>
+      {/* palette */}
+      <path
+        d="M16 4 Q26 4 28 14 Q28 22 20 22 Q17 22 17 19 Q17 16 14 16 Q10 16 8 20 Q4 24 8 27 Q14 30 22 28 Q30 25 30 14 Q30 2 16 2 Q4 2 4 14 Q4 18 7 18 Q10 18 10 14 Q10 4 16 4 Z"
+        fill="url(#palette)"
+        stroke="#7A5A28"
+        strokeWidth="0.8"
+      />
+      {/* paint blobs */}
+      <circle cx="10" cy="8" r="2" fill="#E64545" />
+      <circle cx="16" cy="7" r="2" fill="#F2C636" />
+      <circle cx="22" cy="9" r="2" fill="#3A8FE0" />
+      <circle cx="24" cy="15" r="1.8" fill="#5BC04C" />
+      <circle cx="9" cy="14" r="1.6" fill="#9E5BD8" />
+      {/* brush */}
+      <rect x="20" y="20" width="2" height="9" rx="0.5" fill="#A8743A" stroke="#5A3A18" strokeWidth="0.4" transform="rotate(20 21 25)" />
+      <path d="M22 28 L25 30 L23 27 Z" fill="#3A3A3A" transform="rotate(20 23 28)" />
+    </svg>
+  );
+}
+
+export function ChatIcon({ size = 32, className }: IconProps) {
+  return (
+    <svg {...defaults(size)} className={className}>
+      <defs>
+        <linearGradient id="bubbleA" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%" stopColor="#FFE574" />
+          <stop offset="100%" stopColor="#E8B833" />
+        </linearGradient>
+        <linearGradient id="bubbleB" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%" stopColor="#A8E0FF" />
+          <stop offset="100%" stopColor="#3A8FE0" />
+        </linearGradient>
+      </defs>
+      {/* back bubble */}
+      <path
+        d="M16 6 Q28 6 28 14 Q28 20 22 21 L24 26 L18 21 Q12 21 9 18 Q6 15 8 11 Q11 6 16 6 Z"
+        fill="url(#bubbleA)"
+        stroke="#8A6420"
+        strokeWidth="0.7"
+      />
+      {/* front bubble */}
+      <path
+        d="M5 14 Q5 9 11 9 Q19 9 19 15 Q19 19 14 20 L11 25 L11 20 Q5 19 5 14 Z"
+        fill="url(#bubbleB)"
+        stroke="#1A4FB8"
+        strokeWidth="0.7"
+      />
+      <circle cx="9" cy="15" r="0.9" fill="#FFFFFF" />
+      <circle cx="12" cy="15" r="0.9" fill="#FFFFFF" />
+      <circle cx="15" cy="15" r="0.9" fill="#FFFFFF" />
+    </svg>
+  );
+}
+
+export function BulbIcon({ size = 24, className }: IconProps) {
+  return (
+    <svg width={size} height={size} viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg" className={className}>
+      <defs>
+        <radialGradient id="bulbGlow" cx="50%" cy="40%" r="60%">
+          <stop offset="0%" stopColor="#FFFFE0" />
+          <stop offset="60%" stopColor="#F2D850" />
+          <stop offset="100%" stopColor="#A87A14" />
+        </radialGradient>
+      </defs>
+      <path
+        d="M16 4 Q23 4 23 12 Q23 16 20 19 L20 22 L12 22 L12 19 Q9 16 9 12 Q9 4 16 4 Z"
+        fill="url(#bulbGlow)"
+        stroke="#7A5A10"
+        strokeWidth="0.8"
+      />
+      <rect x="12" y="22" width="8" height="2" fill="#9D9888" stroke="#3A3A3A" strokeWidth="0.5" />
+      <rect x="13" y="24" width="6" height="2" fill="#9D9888" stroke="#3A3A3A" strokeWidth="0.5" />
+      <path d="M14 26 L18 26 L17 28 L15 28 Z" fill="#5A5A5A" stroke="#3A3A3A" strokeWidth="0.4" />
+      {/* shine */}
+      <path d="M14 7 Q12 10 13 13" stroke="#FFFFFF" strokeWidth="0.8" fill="none" opacity="0.7" />
+    </svg>
+  );
+}
+
+export function ConnectedNetworkIcon({ size = 14, className }: IconProps) {
+  return (
+    <svg
+      width={size}
+      height={size}
+      viewBox="0 0 16 16"
+      xmlns="http://www.w3.org/2000/svg"
+      className={className}
+    >
+      <rect x="2" y="9" width="5" height="4" rx="0.5" fill="#FFFFFF" stroke="#0A2F6B" strokeWidth="0.4" />
+      <rect x="9" y="9" width="5" height="4" rx="0.5" fill="#FFFFFF" stroke="#0A2F6B" strokeWidth="0.4" />
+      <line x1="4.5" y1="9" x2="4.5" y2="6" stroke="#FFFFFF" strokeWidth="0.8" />
+      <line x1="11.5" y1="9" x2="11.5" y2="6" stroke="#FFFFFF" strokeWidth="0.8" />
+      <line x1="4.5" y1="6" x2="11.5" y2="6" stroke="#FFFFFF" strokeWidth="0.8" />
+      {/* both lights green to indicate connection */}
+      <circle cx="3.5" cy="11" r="0.7" fill="#5BFF5B" />
+      <circle cx="10.5" cy="11" r="0.7" fill="#5BFF5B" />
+      {/* small pulse rings */}
+      <circle cx="3.5" cy="11" r="1.6" fill="none" stroke="#7BFF7B" strokeWidth="0.3" opacity="0.7" />
+      <circle cx="10.5" cy="11" r="1.6" fill="none" stroke="#7BFF7B" strokeWidth="0.3" opacity="0.7" />
+    </svg>
+  );
+}
+
 export function TerminalIcon({ size = 32, className }: IconProps) {
   const s = size;
   return (

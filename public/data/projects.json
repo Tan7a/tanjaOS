@@ -1,0 +1,40 @@
+{
+  "projects": [
+    {
+      "id": 1,
+      "title": "Flero",
+      "year": "2026",
+      "description": "Agent-first enterprise workflow automation platform. Lead designer working with Dan and the AICE Technology team. Canvas-based editor where humans and AI agents collaborate on long-running workflows with full audit trails.",
+      "tags": ["UX Design", "Product", "AI Agents", "Enterprise"],
+      "image": "/images/projects/placeholder-1.svg",
+      "link": "https://flero.io"
+    },
+    {
+      "id": 2,
+      "title": "PhD in Human Computer Interaction",
+      "year": "2024 to present",
+      "description": "Research on how people understand and trust AI agents that act on their behalf. Studying observability and explainability for non-technical users.",
+      "tags": ["Research", "HCI", "AI"],
+      "image": "/images/projects/placeholder-2.svg",
+      "link": ""
+    },
+    {
+      "id": 3,
+      "title": "TanjaOS",
+      "year": "2026",
+      "description": "Personal Windows XP time capsule at tanjaos.space. A nostalgic OS-style website built with Next.js and a lot of love. The opposite of a portfolio.",
+      "tags": ["Personal", "Web", "Nostalgia"],
+      "image": "/images/projects/placeholder-3.svg",
+      "link": "https://tanjaos.space"
+    },
+    {
+      "id": 4,
+      "title": "Replace this with your real work",
+      "year": "2025",
+      "description": "Edit public/data/projects.json to swap these placeholders for your real projects. Add a thumbnail under public/images/projects/, set the link, and you are done.",
+      "tags": ["Placeholder"],
+      "image": "/images/projects/placeholder-4.svg",
+      "link": ""
+    }
+  ]
+}

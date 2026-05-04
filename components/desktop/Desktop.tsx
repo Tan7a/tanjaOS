@@ -1,12 +1,14 @@
 "use client";
 
-import { useReducer, useState } from "react";
+import { useEffect, useReducer, useRef, useState } from "react";
 import apps, { type AppId, type AppRegistryEntry } from "@/lib/apps";
 import BlissWallpaper from "./BlissWallpaper";
 import DesktopIcon from "./DesktopIcon";
 import Window from "@/components/windows/Window";
 import Taskbar, { type TaskbarWindow } from "./Taskbar";
 import StartMenu from "./StartMenu";
+import Screensaver from "./Screensaver";
+import TipOfTheDay from "./TipOfTheDay";
 
 interface WindowState {
   id: AppId;
@@ -24,6 +26,7 @@ type Action =
   | { type: "toggleFromTaskbar"; id: AppId };
 
 const Z_BASE = 100;
+const SCREENSAVER_IDLE_MS = 180_000; // 3 minutes
 
 function nextZ(windows: WindowState[]) {
   return windows.length === 0 ? Z_BASE : Math.max(...windows.map((w) => w.zIndex)) + 1;
@@ -97,6 +100,33 @@ export default function Desktop() {
   const [windows, dispatch] = useReducer(reducer, []);
   const [selectedIcon, setSelectedIcon] = useState<string | null>(null);
   const [startOpen, setStartOpen] = useState(false);
+  const [screensaverActive, setScreensaverActive] = useState(false);
+  const idleTimerRef = useRef<number | null>(null);
+
+  // idle timer for screensaver
+  useEffect(() => {
+    const reset = () => {
+      if (idleTimerRef.current !== null) {
+        window.clearTimeout(idleTimerRef.current);
+      }
+      if (!screensaverActive) {
+        idleTimerRef.current = window.setTimeout(() => {
+          setScreensaverActive(true);
+        }, SCREENSAVER_IDLE_MS);
+      }
+    };
+
+    const events = ["mousemove", "keydown", "mousedown", "wheel", "touchstart"];
+    events.forEach((e) => window.addEventListener(e, reset, { passive: true }));
+    reset();
+
+    return () => {
+      events.forEach((e) => window.removeEventListener(e, reset));
+      if (idleTimerRef.current !== null) {
+        window.clearTimeout(idleTimerRef.current);
+      }
+    };
+  }, [screensaverActive]);
 
   const open = (entry: AppRegistryEntry) =>
     dispatch({
@@ -148,6 +178,9 @@ export default function Desktop() {
         }}
       >
         <BlissWallpaper />
+
+        {/* Tip of the day widget — sits behind windows */}
+        <TipOfTheDay />
 
         {/* Desktop icons — anchor-positioned, draggable */}
         {apps.map((entry, i) => (
@@ -213,6 +246,11 @@ export default function Desktop() {
           dispatch({ type: "toggleFromTaskbar", id })
         }
       />
+
+      {/* Screensaver overlay */}
+      {screensaverActive && (
+        <Screensaver onDismiss={() => setScreensaverActive(false)} />
+      )}
     </div>
   );
 }

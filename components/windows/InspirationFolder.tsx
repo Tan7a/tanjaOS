@@ -154,7 +154,17 @@ export default function InspirationFolder() {
     );
   }
 
+  const folderImages = currentFolder.children.filter(
+    (c): c is ImageEntry => c.type === "image",
+  );
+
   if (previewImage) {
+    const currentIndex = folderImages.findIndex(
+      (img) => img.src === previewImage.src,
+    );
+    const hasPrev = currentIndex > 0;
+    const hasNext =
+      currentIndex >= 0 && currentIndex < folderImages.length - 1;
     return (
       <ImageViewer
         src={previewImage.src}
@@ -162,6 +172,13 @@ export default function InspirationFolder() {
         caption={previewImage.caption}
         parentLabel={currentFolder.name}
         onBack={() => setPreviewImage(null)}
+        onPrev={hasPrev ? () => setPreviewImage(folderImages[currentIndex - 1]) : undefined}
+        onNext={hasNext ? () => setPreviewImage(folderImages[currentIndex + 1]) : undefined}
+        position={
+          currentIndex >= 0
+            ? { current: currentIndex + 1, total: folderImages.length }
+            : undefined
+        }
       />
     );
   }

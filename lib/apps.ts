@@ -12,6 +12,11 @@ import {
   BookshelfIcon,
   FolderIcon,
   TerminalIcon,
+  MyWorkIcon,
+  FavoritesIcon,
+  ModemIcon,
+  PaintIcon,
+  ChatIcon,
 } from "@/components/icons/AppIcons";
 import MusicPlayer from "@/components/windows/MusicPlayer";
 import DXBall from "@/components/windows/DXBall";
@@ -25,6 +30,11 @@ import PennyWindow from "@/components/windows/PennyWindow";
 import Bookshelf from "@/components/windows/Bookshelf";
 import InspirationFolder from "@/components/windows/InspirationFolder";
 import Terminal from "@/components/windows/Terminal";
+import Projects from "@/components/windows/Projects";
+import Bookmarks from "@/components/windows/Bookmarks";
+import DialUp from "@/components/windows/DialUp";
+import Paint from "@/components/windows/Paint";
+import ChatWindow from "@/components/windows/ChatWindow";
 
 export type AppId =
   | "musicPlayer"
@@ -38,7 +48,12 @@ export type AppId =
   | "penny"
   | "bookshelf"
   | "inspiration"
-  | "terminal";
+  | "terminal"
+  | "projects"
+  | "bookmarks"
+  | "dialup"
+  | "paint"
+  | "chat";
 
 export type DesktopAnchor = "tl" | "tr" | "bl" | "br";
 
@@ -65,9 +80,16 @@ export interface AppRegistryEntry {
 }
 
 /**
- * Order here is the order shown in the desktop icon column (top to bottom).
+ * Two left-side columns of desktop icons. Only the Recycle Bin sits in the
+ * bottom-right corner. Column 1 starts at x=8, column 2 at x=88.
+ * Each row is 78px tall.
  */
+const COL1_X = 8;
+const COL2_X = 88;
+const ROW = (i: number) => 12 + i * 78;
+
 const apps: AppRegistryEntry[] = [
+  // ─── Column 1 (left) ─────────────────────────────────────────────────────
   {
     id: "myComputer",
     title: "My Computer",
@@ -75,7 +97,7 @@ const apps: AppRegistryEntry[] = [
     component: MyComputer,
     defaultPosition: { x: 180, y: 70 },
     defaultSize: { width: 620, height: 440 },
-    desktopIcon: { anchor: "tl", x: 8, y: 12 },
+    desktopIcon: { anchor: "tl", x: COL1_X, y: ROW(0) },
   },
   {
     id: "aboutMe",
@@ -84,7 +106,7 @@ const apps: AppRegistryEntry[] = [
     component: AboutWindow,
     defaultPosition: { x: 360, y: 80 },
     defaultSize: { width: 620, height: 580 },
-    desktopIcon: { anchor: "tl", x: 8, y: 90 },
+    desktopIcon: { anchor: "tl", x: COL1_X, y: ROW(1) },
   },
   {
     id: "penny",
@@ -93,7 +115,7 @@ const apps: AppRegistryEntry[] = [
     component: PennyWindow,
     defaultPosition: { x: 420, y: 110 },
     defaultSize: { width: 620, height: 600 },
-    desktopIcon: { anchor: "tl", x: 8, y: 168 },
+    desktopIcon: { anchor: "tl", x: COL1_X, y: ROW(2) },
   },
   {
     id: "bookshelf",
@@ -103,7 +125,7 @@ const apps: AppRegistryEntry[] = [
     component: Bookshelf,
     defaultPosition: { x: 200, y: 40 },
     defaultSize: { width: 980, height: 680 },
-    desktopIcon: { anchor: "tl", x: 8, y: 246 },
+    desktopIcon: { anchor: "tl", x: COL1_X, y: ROW(3) },
   },
   {
     id: "myDocuments",
@@ -112,7 +134,7 @@ const apps: AppRegistryEntry[] = [
     component: MyDocuments,
     defaultPosition: { x: 240, y: 110 },
     defaultSize: { width: 660, height: 460 },
-    desktopIcon: { anchor: "tl", x: 8, y: 324 },
+    desktopIcon: { anchor: "tl", x: COL1_X, y: ROW(4) },
   },
   {
     id: "inspiration",
@@ -121,8 +143,30 @@ const apps: AppRegistryEntry[] = [
     component: InspirationFolder,
     defaultPosition: { x: 260, y: 90 },
     defaultSize: { width: 660, height: 460 },
-    desktopIcon: { anchor: "tl", x: 8, y: 402 },
+    desktopIcon: { anchor: "tl", x: COL1_X, y: ROW(5) },
   },
+  {
+    id: "projects",
+    title: "portfolio.doc - Microsoft Word",
+    desktopLabel: "My Work",
+    icon: (size) => MyWorkIcon({ size }),
+    component: Projects,
+    defaultPosition: { x: 240, y: 60 },
+    defaultSize: { width: 760, height: 600 },
+    desktopIcon: { anchor: "tl", x: COL1_X, y: ROW(6) },
+  },
+  {
+    id: "dialup",
+    title: "Connect to TanjaNet",
+    desktopLabel: "Connect to Internet",
+    icon: (size) => ModemIcon({ size }),
+    component: DialUp,
+    defaultPosition: { x: 280, y: 120 },
+    defaultSize: { width: 460, height: 470 },
+    desktopIcon: { anchor: "tl", x: COL1_X, y: ROW(7) },
+  },
+
+  // ─── Column 2 (left, offset right) ───────────────────────────────────────
   {
     id: "terminal",
     title: "Command Prompt",
@@ -131,7 +175,7 @@ const apps: AppRegistryEntry[] = [
     component: Terminal,
     defaultPosition: { x: 360, y: 130 },
     defaultSize: { width: 600, height: 380 },
-    desktopIcon: { anchor: "tr", x: 12, y: 12 },
+    desktopIcon: { anchor: "tl", x: COL2_X, y: ROW(0) },
   },
   {
     id: "musicPlayer",
@@ -140,7 +184,7 @@ const apps: AppRegistryEntry[] = [
     component: MusicPlayer,
     defaultPosition: { x: 140, y: 60 },
     defaultSize: { width: 480, height: 460 },
-    desktopIcon: { anchor: "tr", x: 12, y: 90 },
+    desktopIcon: { anchor: "tl", x: COL2_X, y: ROW(1) },
   },
   {
     id: "dxball",
@@ -149,7 +193,7 @@ const apps: AppRegistryEntry[] = [
     component: DXBall,
     defaultPosition: { x: 700, y: 80 },
     defaultSize: { width: 500, height: 560 },
-    desktopIcon: { anchor: "tr", x: 12, y: 168 },
+    desktopIcon: { anchor: "tl", x: COL2_X, y: ROW(2) },
   },
   {
     id: "photos",
@@ -158,7 +202,7 @@ const apps: AppRegistryEntry[] = [
     component: PhotoFolder,
     defaultPosition: { x: 220, y: 130 },
     defaultSize: { width: 640, height: 440 },
-    desktopIcon: { anchor: "tr", x: 12, y: 246 },
+    desktopIcon: { anchor: "tl", x: COL2_X, y: ROW(3) },
   },
   {
     id: "screenplay",
@@ -168,8 +212,40 @@ const apps: AppRegistryEntry[] = [
     component: ScreenplayEditor,
     defaultPosition: { x: 320, y: 90 },
     defaultSize: { width: 660, height: 520 },
-    desktopIcon: { anchor: "tr", x: 12, y: 324 },
+    desktopIcon: { anchor: "tl", x: COL2_X, y: ROW(4) },
   },
+  {
+    id: "bookmarks",
+    title: "Favorites",
+    desktopLabel: "Favorites",
+    icon: (size) => FavoritesIcon({ size }),
+    component: Bookmarks,
+    defaultPosition: { x: 320, y: 80 },
+    defaultSize: { width: 360, height: 460 },
+    desktopIcon: { anchor: "tl", x: COL2_X, y: ROW(5) },
+  },
+  {
+    id: "paint",
+    title: "untitled - Paint",
+    desktopLabel: "Paint",
+    icon: (size) => PaintIcon({ size }),
+    component: Paint,
+    defaultPosition: { x: 200, y: 60 },
+    defaultSize: { width: 700, height: 540 },
+    desktopIcon: { anchor: "tl", x: COL2_X, y: ROW(6) },
+  },
+  {
+    id: "chat",
+    title: "TanjaOS Chat",
+    desktopLabel: "Chat",
+    icon: (size) => ChatIcon({ size }),
+    component: ChatWindow,
+    defaultPosition: { x: 240, y: 80 },
+    defaultSize: { width: 640, height: 480 },
+    desktopIcon: { anchor: "tl", x: COL2_X, y: ROW(7) },
+  },
+
+  // ─── Bottom right corner (only the Recycle Bin) ─────────────────────────
   {
     id: "recycleBin",
     title: "Recycle Bin",

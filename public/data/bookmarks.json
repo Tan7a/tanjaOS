@@ -1,0 +1,52 @@
+{
+  "bookmarks": [
+    {
+      "id": 1,
+      "category": "Inspiration",
+      "title": "Are.na",
+      "url": "https://are.na"
+    },
+    {
+      "id": 2,
+      "category": "Inspiration",
+      "title": "Cosmos",
+      "url": "https://cosmos.so"
+    },
+    {
+      "id": 3,
+      "category": "Inspiration",
+      "title": "It's Nice That",
+      "url": "https://www.itsnicethat.com"
+    },
+    {
+      "id": 4,
+      "category": "Reading",
+      "title": "Smashing Magazine",
+      "url": "https://www.smashingmagazine.com"
+    },
+    {
+      "id": 5,
+      "category": "Reading",
+      "title": "A List Apart",
+      "url": "https://alistapart.com"
+    },
+    {
+      "id": 6,
+      "category": "Tools",
+      "title": "Figma",
+      "url": "https://figma.com"
+    },
+    {
+      "id": 7,
+      "category": "Tools",
+      "title": "Notion",
+      "url": "https://notion.so"
+    },
+    {
+      "id": 8,
+      "category": "Mine",
+      "title": "tanjaos.space",
+      "url": "https://tanjaos.space"
+    }
+  ]
+}
