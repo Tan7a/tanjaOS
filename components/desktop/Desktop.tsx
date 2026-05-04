@@ -2,6 +2,7 @@
 
 import { useEffect, useReducer, useRef, useState } from "react";
 import apps, { type AppId, type AppRegistryEntry } from "@/lib/apps";
+import { useViewportMode } from "@/lib/useViewportMode";
 import BlissWallpaper from "./BlissWallpaper";
 import DesktopIcon from "./DesktopIcon";
 import Window from "@/components/windows/Window";
@@ -102,6 +103,8 @@ export default function Desktop() {
   const [startOpen, setStartOpen] = useState(false);
   const [screensaverActive, setScreensaverActive] = useState(false);
   const idleTimerRef = useRef<number | null>(null);
+  const mode = useViewportMode();
+  const isMobile = mode === "mobile";
 
   // idle timer for screensaver
   useEffect(() => {
@@ -179,23 +182,54 @@ export default function Desktop() {
       >
         <BlissWallpaper />
 
-        {/* Tip of the day widget — sits behind windows */}
-        <TipOfTheDay />
+        {/* Tip of the day widget — sits behind windows. Hidden on mobile to give icons room. */}
+        {!isMobile && <TipOfTheDay />}
 
-        {/* Desktop icons — anchor-positioned, draggable */}
-        {apps.map((entry, i) => (
-          <DesktopIcon
-            key={entry.id}
-            title={entry.desktopLabel ?? entry.title}
-            icon={entry.icon(32)}
-            selected={selectedIcon === entry.id}
-            position={
-              entry.desktopIcon ?? { anchor: "tl", x: 8, y: 12 + i * 78 }
-            }
-            onSelect={() => setSelectedIcon(entry.id)}
-            onOpen={() => open(entry)}
-          />
-        ))}
+        {/* Desktop icons */}
+        {isMobile ? (
+          <div
+            style={{
+              position: "absolute",
+              inset: 0,
+              padding: 12,
+              display: "grid",
+              gridTemplateColumns: "repeat(4, 1fr)",
+              gap: 8,
+              alignContent: "start",
+              overflow: "auto",
+              zIndex: 10,
+            }}
+            onClick={(e) => {
+              if (e.target === e.currentTarget) setSelectedIcon(null);
+            }}
+          >
+            {apps.map((entry) => (
+              <DesktopIcon
+                key={entry.id}
+                title={entry.desktopLabel ?? entry.title}
+                icon={entry.icon(32)}
+                selected={selectedIcon === entry.id}
+                layout="grid"
+                onSelect={() => setSelectedIcon(entry.id)}
+                onOpen={() => open(entry)}
+              />
+            ))}
+          </div>
+        ) : (
+          apps.map((entry, i) => (
+            <DesktopIcon
+              key={entry.id}
+              title={entry.desktopLabel ?? entry.title}
+              icon={entry.icon(32)}
+              selected={selectedIcon === entry.id}
+              position={
+                entry.desktopIcon ?? { anchor: "tl", x: 8, y: 12 + i * 78 }
+              }
+              onSelect={() => setSelectedIcon(entry.id)}
+              onOpen={() => open(entry)}
+            />
+          ))
+        )}
 
         {/* Open windows */}
         {windows.map((w) => {
@@ -212,6 +246,7 @@ export default function Desktop() {
               initialSize={entry.defaultSize}
               zIndex={w.zIndex}
               isActive={w.id === focusedId}
+              mobileNote={entry.mobileNote}
               onClose={() => dispatch({ type: "close", id: w.id })}
               onMinimize={() => dispatch({ type: "minimize", id: w.id })}
               onFocus={() => dispatch({ type: "focus", id: w.id })}

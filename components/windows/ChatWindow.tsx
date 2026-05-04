@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import { supabase } from "@/lib/supabase";
 import { useDialUp } from "@/lib/dialup-context";
+import { useViewportMode } from "@/lib/useViewportMode";
 import UsernameModal from "./chat/UsernameModal";
 import RoomList, { type Room } from "./chat/RoomList";
 import RoomView from "./chat/RoomView";
@@ -10,6 +11,8 @@ import { ChatIcon, ModemIcon } from "@/components/icons/AppIcons";
 
 export default function ChatWindow() {
   const { isConnected } = useDialUp();
+  const mode = useViewportMode();
+  const isMobile = mode === "mobile";
   const [username, setUsername] = useState<string | null>(null);
   const [rooms, setRooms] = useState<Room[]>([]);
   const [selectedRoomId, setSelectedRoomId] = useState<string | null>(null);
@@ -77,11 +80,19 @@ export default function ChatWindow() {
         </span>
       </div>
 
-      <div style={{ flex: 1, minHeight: 0, display: "flex" }}>
+      <div
+        style={{
+          flex: 1,
+          minHeight: 0,
+          display: "flex",
+          flexDirection: isMobile ? "column" : "row",
+        }}
+      >
         <RoomList
           rooms={rooms}
           selectedId={selectedRoomId}
           onSelect={setSelectedRoomId}
+          stacked={isMobile}
           onCreate={async (name, description) => {
             if (!supabase) return "Not configured.";
             const { data, error } = await supabase

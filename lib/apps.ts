@@ -77,6 +77,8 @@ export interface AppRegistryEntry {
   defaultSize: { width: number; height: number };
   /** Where this app's icon sits on the desktop. If omitted, falls back to a left-column slot. */
   desktopIcon?: DesktopIconPosition;
+  /** Shown as a dismissable XP-style banner above the app on small screens. */
+  mobileNote?: string;
 }
 
 /**
@@ -194,6 +196,7 @@ const apps: AppRegistryEntry[] = [
     defaultPosition: { x: 700, y: 80 },
     defaultSize: { width: 500, height: 560 },
     desktopIcon: { anchor: "tl", x: COL2_X, y: ROW(2) },
+    mobileNote: "DX-Ball is best with a keyboard. It'll be tiny here.",
   },
   {
     id: "photos",
@@ -233,6 +236,7 @@ const apps: AppRegistryEntry[] = [
     defaultPosition: { x: 200, y: 60 },
     defaultSize: { width: 700, height: 540 },
     desktopIcon: { anchor: "tl", x: COL2_X, y: ROW(6) },
+    mobileNote: "Paint works best with a mouse on a bigger screen.",
   },
   {
     id: "chat",

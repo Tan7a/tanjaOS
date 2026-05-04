@@ -11,6 +11,7 @@ import {
   UserAvatarIcon,
 } from "@/components/icons/AppIcons";
 import type { AppId } from "@/lib/apps";
+import { useViewportMode } from "@/lib/useViewportMode";
 
 interface StartMenuProps {
   onClose: () => void;
@@ -19,6 +20,8 @@ interface StartMenuProps {
 
 export default function StartMenu({ onClose, onLaunch }: StartMenuProps) {
   const ref = useRef<HTMLDivElement>(null);
+  const mode = useViewportMode();
+  const isMobile = mode === "mobile";
 
   useEffect(() => {
     const onMouseDown = (e: MouseEvent) => {
@@ -52,8 +55,11 @@ export default function StartMenu({ onClose, onLaunch }: StartMenuProps) {
         position: "fixed",
         bottom: "var(--xp-taskbar-height)",
         left: 0,
-        width: 380,
-        height: 480,
+        width: isMobile ? "min(380px, calc(100vw - 8px))" : 380,
+        height: isMobile
+          ? "min(480px, calc(100vh - var(--xp-taskbar-height) - 8px))"
+          : 480,
+        maxWidth: "100vw",
         background: "#FFFFFF",
         border: "2px solid #0A3FB5",
         borderBottom: "none",
@@ -90,8 +96,16 @@ export default function StartMenu({ onClose, onLaunch }: StartMenuProps) {
         </span>
       </div>
 
-      {/* Two columns */}
-      <div style={{ flex: 1, display: "flex", minHeight: 0 }}>
+      {/* Two columns (stacked on mobile) */}
+      <div
+        style={{
+          flex: 1,
+          display: "flex",
+          flexDirection: isMobile ? "column" : "row",
+          minHeight: 0,
+          overflow: "auto",
+        }}
+      >
         {/* Left column — pinned */}
         <div
           style={{
@@ -137,14 +151,15 @@ export default function StartMenu({ onClose, onLaunch }: StartMenuProps) {
         {/* Right column — system */}
         <div
           style={{
-            width: 170,
+            width: isMobile ? "auto" : 170,
             flexShrink: 0,
             background: "#D6E4F8",
             padding: "8px 4px",
             display: "flex",
             flexDirection: "column",
             gap: 1,
-            borderLeft: "1px solid #B8C8E8",
+            borderLeft: isMobile ? "none" : "1px solid #B8C8E8",
+            borderTop: isMobile ? "1px solid #B8C8E8" : "none",
           }}
         >
           <SmallItem icon={<MyDocumentsIcon size={20} />} label="My Documents" onClick={onClose} />
