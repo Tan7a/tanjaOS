@@ -1,0 +1,30 @@
+{
+  "name": "Inspiration",
+  "children": [
+    {
+      "type": "folder",
+      "name": "Illustrations",
+      "children": [
+        { "type": "image", "name": "image-01.jpg", "src": "/Inspiration/illustrations/15fd4b58ced4f2e422205be16ed37a7b.jpg" },
+        { "type": "image", "name": "image-02.jpg", "src": "/Inspiration/illustrations/7f24dcfa002d3db6b576ceeafce95ee3.jpg" },
+        { "type": "image", "name": "image-03.jpg", "src": "/Inspiration/illustrations/7f92a574ec11ac4333c0af3d8cfee208.jpg" },
+        { "type": "image", "name": "image-04.jpg", "src": "/Inspiration/illustrations/87f0e7ce7ef0c4f9a039ba24edee2cc0.jpg" },
+        { "type": "image", "name": "image-05.jpg", "src": "/Inspiration/illustrations/88a23294bfc6691e2db8194697de1127.jpg" },
+        { "type": "image", "name": "image-06.jpg", "src": "/Inspiration/illustrations/9050d0ced273661a7b45ddf4db9e10be.jpg" },
+        { "type": "image", "name": "image-07.jpg", "src": "/Inspiration/illustrations/fadcbd759072964c3c30fdf7badbf937.jpg" }
+      ]
+    },
+    {
+      "type": "folder",
+      "name": "Food",
+      "children": [
+        { "type": "image", "name": "food-01.jpg", "src": "/Inspiration/food/6358499b1f90a320ab4a781233b8f3e2.jpg" },
+        { "type": "image", "name": "food-02.jpg", "src": "/Inspiration/food/64e4e469611fa5837dbbf85805124b3f.jpg" },
+        { "type": "image", "name": "food-03.jpg", "src": "/Inspiration/food/7ebc228278cbaaa549da1e7d037017c3.jpg" },
+        { "type": "image", "name": "food-04.jpg", "src": "/Inspiration/food/bb42fba664fdf06a5760ecd4a92acbdd.jpg" },
+        { "type": "image", "name": "food-05.jpg", "src": "/Inspiration/food/d2851b44ff5e77347f51ff2860790b09.jpg" },
+        { "type": "image", "name": "food-06.jpg", "src": "/Inspiration/food/ff7e4f29e6bc2edfb13422cc6eb8618f.jpg" }
+      ]
+    }
+  ]
+}
